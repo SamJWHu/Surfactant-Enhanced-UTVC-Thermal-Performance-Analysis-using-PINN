@@ -1,16 +1,40 @@
 # Surfactant-Enhanced-UTVC-Thermal-Performance-Analysis-using-PINN
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
-- [Surfactant Mixtures](#surfactant-mixtures)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Results](#results)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+## Overview
+
+This project implements a **Physics-Informed Neural Network (PINN)** using TensorFlow to simulate and analyze the **thermal performance enhancement** of **surfactant-enhanced ultra-thin vapor chambers (UTVC)**. The PINN integrates governing physical equations, including the **continuity equation**, **Navier-Stokes equations**, **energy equation**, and **surfactant transport equation**, to accurately model heat dissipation mechanisms within UTVCs under various surfactant conditions.
+
+## Features
+
+- **3D PINN Architecture:** Designed to handle three-dimensional simulations for comprehensive analysis.
+- **Integration of Governing Equations:** Enforces physical laws directly within the neural network's loss function.
+- **Detailed Boundary Conditions:** Models evaporation, condensation, adiabatic, and convective boundaries accurately.
+- **Normalization and Denormalization:** Ensures numerical stability and efficient training.
+- **Visualization Tools:** This tool generates plots for temperature distribution, velocity fields, pressure distribution, and surfactant concentration at various time points.
+- **Optimized Training:** Implements strategies to handle high-dimensional data efficiently, including gradient clipping and learning rate scheduling.
+
+## Background
+
+Ultra-thin vapor Chambers (UTVC) are critical components in thermal management systems, particularly in electronics cooling. Enhancing their thermal performance can significantly improve device reliability and efficiency. This project leverages PINNs to model the complex heat transfer and fluid dynamics within UTVCs, incorporating the effects of surfactants to optimize performance.
+
+## Getting Started
+
+### Prerequisites
+
+- **Python 3.8 or higher**
+- **TensorFlow 2.8.0 or higher**
+- **NumPy**
+- **Matplotlib**
+
+Ensure you have Python and `pip` installed on your system. It's recommended to use a virtual environment to manage dependencies.
+
+### Installation
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/yourusername/pinn-utvc.git
+   cd pinn-utvc
 
 ## Introduction
 
@@ -61,6 +85,10 @@ The model evaluates the following ten dilute surfactant-water mixtures to determ
 | C12-C13 APGs            | 0.1                 | 30-40                            | 90-100               |
 | C12-C13 APGs            | 0.15                | 30-40                            | 90-100               |
 
+
+Results
+Upon training, the PINN predicts the thermal and fluid dynamics within the UTVC. The visualization plots provide insights into temperature distribution, velocity fields, pressure gradients, and surfactant concentrations at various time points, facilitating the analysis of thermal performance enhancements.
+
 ## Installation
 
 1. **Clone the Repository**
@@ -71,7 +99,7 @@ The model evaluates the following ten dilute surfactant-water mixtures to determ
 Usage
 Configure Surfactant Properties
 
-The surfactant_data dictionary in pinn_model.py contains the properties of each surfactant mixture. Modify this section if you wish to add new mixtures or update existing ones.
+The surfactant_data dictionary in pinn_model.py contains the properties of each surfactant mixture. Modify this section if you wish to add or update new mixtures.
 
 Run the Simulation
 
@@ -82,10 +110,10 @@ Copy code
 python pinn_model.py
 View Results
 
-After training, the script will generate bar charts comparing the maximum and average temperatures for each surfactant mixture. These visualizations help identify the most effective surfactants for enhancing UTVC performance.
+After training, the script will generate bar charts comparing each surfactant mixture's maximum and average temperatures. These visualizations help identify the most effective surfactants for enhancing UTVC performance.
 
 Results
-The simulation evaluates the effectiveness of each surfactant mixture in reducing maximum temperatures near the evaporation area and maintaining reasonable average temperatures across the UTVC. The results are visualized through bar charts, providing clear comparisons of thermal performance enhancements.
+The simulation evaluates the effectiveness of each surfactant mixture in reducing maximum temperatures near the evaporation area and maintaining reasonable average temperatures across the UTVC. The results are visualized through bar charts, clearly comparing thermal performance enhancements.
 
 Project Structure
 Copy code
@@ -105,7 +133,7 @@ requirements.txt: Lists all Python dependencies.
 README.md: Project documentation (this file).
 LICENSE: License information.
 Contributing
-Contributions are welcome! Whether it's improving the model, adding new surfactant mixtures, or enhancing documentation, your input is valuable.
+Contributions are welcome! Your input is valuable, whether it's improving the model, adding new surfactant mixtures, or enhancing documentation.
 
 Fork the Repository
 
@@ -132,6 +160,11 @@ Open a Pull Request
 
 License
 This project is licensed under the MIT License.
+
+Acknowledgements
+Physics-Informed Neural Networks by Raissi, Perdikaris, and Karniadakis.
+TensorFlow for providing the deep learning framework.
+NumPy and Matplotlib for data handling and visualization.
 
 Contact
 For any questions or suggestions, please open an issue or contact r02522318@gmail.com
