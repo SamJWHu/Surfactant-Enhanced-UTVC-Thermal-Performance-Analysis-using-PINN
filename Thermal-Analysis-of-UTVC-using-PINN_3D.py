@@ -11,6 +11,10 @@ import matplotlib.pyplot as plt
 import time
 import os
 
+from numba import cuda 
+device = cuda.get_current_device()
+device.reset()
+
 # ---------------------------------------
 # 0. Setup and Configuration
 # ---------------------------------------
@@ -121,14 +125,16 @@ def denormalize_w(w_dimless):
 # ---------------------------------------
 input_dim = 4          # x, y, z, t
 output_dim = 6         # u, v, w, p, T, C
-num_hidden_layers = 4  # Reduced from 8 to mitigate memory usage
+num_hidden_layers = 6  # Reduced from 8 to mitigate memory usage
 num_neurons_per_layer = 30  # Reduced from 50 to mitigate memory usage
 activation_function = tf.nn.tanh
 
+
 # Training parameters
-learning_rate = 1e-4  # Reduced from 1e-3 to enhance numerical stability
+learning_rate = 1e-3  # Reduced from 1e-3 to enhance numerical stability
 epochs = 20000
 batch_size = 512      # Reduced from 1024 to mitigate memory usage
+
 
 # ---------------------------------------
 # 5. Data Generation
@@ -300,6 +306,10 @@ def compute_pde_loss(model, X):
     
     # Surfactant transport equation residual
     surfactant = Pe_C * (C_t + u * C_x + v * C_y + w * C_z) - (C_xx + C_yy + C_zz)
+
+    # L2 Regularization
+    l2_lambda = 1e-4
+    l2_loss = tf.add_n([tf.nn.l2_loss(v) for v in model.trainable_variables])
     
     # Mean squared errors
     mse_continuity = tf.reduce_mean(tf.square(continuity))
@@ -309,9 +319,12 @@ def compute_pde_loss(model, X):
     mse_energy = tf.reduce_mean(tf.square(energy))
     mse_surfactant = tf.reduce_mean(tf.square(surfactant))
     
-    total_pde_loss = mse_continuity + mse_momentum_u + mse_momentum_v + mse_momentum_w + mse_energy + mse_surfactant
+    total_pde_loss = mse_continuity + mse_momentum_u + mse_momentum_v + mse_momentum_w + mse_energy + mse_surfactant + l2_lambda * l2_loss
     
     return total_pde_loss
+
+
+
 
 def compute_boundary_loss(model, X_boundary, N_cpu_total, N_gpu_total):
     total_bc_loss = 0.0
@@ -341,7 +354,8 @@ def compute_boundary_loss(model, X_boundary, N_cpu_total, N_gpu_total):
         
         mse_q = tf.reduce_mean(tf.square(-T_n - q_flux_dim))
         total_bc_loss += mse_q
-    
+
+
     # Condensation regions (Left and Right boundaries)
     for side in ['cond_left', 'cond_right']:
         X_cond = tf.convert_to_tensor(X_boundary[side], dtype=tf.float32)
@@ -352,20 +366,18 @@ def compute_boundary_loss(model, X_boundary, N_cpu_total, N_gpu_total):
             output = model(X_cond)
             T = output[:, 4:5]
         T_n = tape.gradient(T, X_cond)[:, 0:1]  # dT/dx
-        
-        # Convection boundary condition: -dT/dn + h_dim * T = 0
-        # Since T_inf_norm = 0 (normalized), we have -dT/dn + h_dim * T = 0
-        # Thus, dT/dn = h_dim * T
-        # Depending on the side, the normal direction affects the sign
+    
+        # Convection boundary condition: -dT/dn = h_dim * T
         if side == 'cond_left':
-            # Normal is -x, so dT/dn = -dT/dx
-            convection = -T_n + h_dim * T
+            # Normal is in negative x-direction
+            residual = T_n - h_dim * T
         else:
-            # Normal is +x, so dT/dn = dT/dx
-            convection = T_n + h_dim * T
-        
-        mse_conv = tf.reduce_mean(tf.square(convection))
+            # Normal is in positive x-direction
+            residual = -T_n - h_dim * T
+    
+        mse_conv = tf.reduce_mean(tf.square(residual))
         total_bc_loss += mse_conv
+    
     
     # Adiabatic boundaries (Top and Bottom)
     X_adiabatic = tf.convert_to_tensor(X_boundary['adiabatic'], dtype=tf.float32)
@@ -381,6 +393,7 @@ def compute_boundary_loss(model, X_boundary, N_cpu_total, N_gpu_total):
         total_bc_loss += mse_adiabatic
     
     return total_bc_loss
+
 
 def compute_initial_loss(model, X_init):
     output = model(X_init)
@@ -589,6 +602,7 @@ def main():
     evaluate_and_visualize(model, times_to_evaluate)
 
 if __name__ == '__main__':
+    main()
     main()
 
 
