@@ -5,6 +5,7 @@ Created on Tue Oct  8 13:26:34 2024
 @author: SamJWHu
 """
 
+# Import necessary libraries
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -38,7 +39,7 @@ Q_GPU = 50        # GPU heat (W)
 # ---------------------------------------
 # Characteristic scales
 L_star = L        # Length scale (m)
-U_star = 0.01     # Velocity scale (m/s), estimated
+U_star = 0.05     # Velocity scale (m/s), estimated
 T_star = 40       # Temperature difference scale (K), from 30°C to 70°C
 C_star = 0.1      # Concentration scale (kg/kg), 0.1 (kg/kg)
 
@@ -58,7 +59,7 @@ Pe_C = (U_star * L_star) / D
 print(f"Péclet number for concentration (Pe_C): {Pe_C:.2e}")
 
 # Nusselt number (for convection boundary condition)
-Nu = 10.0  # Reduced value to represent realistic convection
+Nu = 100.0  # Reduced value to represent realistic convection
 print(f"Nusselt number (Nu): {Nu:.2f}")
 
 # ---------------------------------------
@@ -118,7 +119,7 @@ activation_function = tf.nn.tanh
 
 # Training parameters
 learning_rate = 1e-3   # Reduced learning rate
-epochs = 10000          # Adjusted number of epochs
+epochs = 12000          # Adjusted number of epochs
 batch_size = 1024      # Increased batch size for stability
 
 # ---------------------------------------
@@ -326,6 +327,10 @@ def compute_pde_loss(model, X):
     # Since Pe_T and Pe_C are large, we scale the energy and surfactant residuals
     scaling_factor_energy = 1.0 / Pe_T
     scaling_factor_surfactant = 1.0 / Pe_C
+
+    # L2 Regularization
+    l2_lambda = 1e-4
+    l2_loss = tf.add_n([tf.nn.l2_loss(v) for v in model.trainable_variables])
     
     # Mean Squared Errors
     mse_continuity = tf.reduce_mean(tf.square(continuity))
@@ -334,7 +339,7 @@ def compute_pde_loss(model, X):
     mse_energy = tf.reduce_mean(tf.square(energy * scaling_factor_energy))
     mse_surfactant = tf.reduce_mean(tf.square(surfactant * scaling_factor_surfactant))
     
-    total_pde_loss = mse_continuity + mse_momentum_u + mse_momentum_v + mse_energy + mse_surfactant
+    total_pde_loss = mse_continuity + mse_momentum_u + mse_momentum_v + mse_energy + mse_surfactant + l2_lambda * l2_loss
     
     return total_pde_loss
 
