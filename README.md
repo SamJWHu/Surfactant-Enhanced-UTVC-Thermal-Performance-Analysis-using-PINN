@@ -50,41 +50,6 @@ Efficient thermal management is critical in modern electronic devices, especiall
 - **Visualization:** Generates clear visual comparisons of maximum and average temperatures across different surfactant mixtures, facilitating easy identification of optimal mixtures.
 - **Efficient Training:** Optimized to run on GPUs, significantly reducing training time from hours to minutes where possible.
 
-## Surfactant Mixtures
-
-The model evaluates the following ten dilute surfactant-water mixtures to determine their effectiveness in enhancing the thermal performance of UTVCs:
-
-1. **Polyethylene Glycol 600 (PEG600):**
-   - 0.3 wt%
-   - 0.4 wt%
-2. **Polyethylene Glycol 1000 (PEG1000):**
-   - 0.2 wt%
-   - 0.3 wt%
-3. **Polypropylene Glycol 600 (PPG600):**
-   - 0.2 wt%
-   - 0.3 wt%
-4. **Polypropylene Glycol 1000 (PPG1000):**
-   - 0.1 wt%
-   - 0.2 wt%
-5. **C12-C13 Alkyl Polyglycosides (C12-C13 APGs):**
-   - 0.1 wt%
-   - 0.15 wt%
-
-**Surfactant Properties:**
-
-| Surfactant              | Concentration (wt%) | Effective Surface Tension (N/m) | Surface Coverage (%) |
-|-------------------------|---------------------|----------------------------------|----------------------|
-| PEG600                  | 0.3                 | 55-65                            | 30-40                |
-| PEG600                  | 0.4                 | 55-65                            | 30-40                |
-| PEG1000                 | 0.2                 | 58-68                            | 20-30                |
-| PEG1000                 | 0.3                 | 58-68                            | 20-30                |
-| PPG600                  | 0.2                 | 58-68                            | 20-30                |
-| PPG600                  | 0.3                 | 58-68                            | 20-30                |
-| PPG1000                 | 0.1                 | 60-70                            | 10-20                |
-| PPG1000                 | 0.2                 | 60-70                            | 10-20                |
-| C12-C13 APGs            | 0.1                 | 30-40                            | 90-100               |
-| C12-C13 APGs            | 0.15                | 30-40                            | 90-100               |
-
 
 Results
 Upon training, the PINN predicts the thermal and fluid dynamics within the UTVC. The visualization plots provide insights into temperature distribution, velocity fields, pressure gradients, and surfactant concentrations at various time points, facilitating the analysis of thermal performance enhancements.
