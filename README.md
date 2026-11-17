@@ -26,3 +26,5 @@ py -3.12 -m venv .venv
 | `python -m unittest discover -s tests -v` | Geometry, automatic differentiation, manufactured solution, heat boundary, interface and regression tests |
 
 The two delivered loads use common placeholder device properties and water-like liquid properties for all ten additives. Differences in mixture performance require experimental information. The reported chip-contact wall temperatures, gauge pressures, liquid velocities, effective plate temperature and 1D phase-interface benchmark each describe a different physical observable. The validation table and measurement instructions distinguish these quantities.
+
+For the 80 W example, run `python -m utvc evaluate --run examples/80W --out runs/replay80` to regenerate the full 3D field archive and training-loss figure from the published weights. Both are included in the downloadable project package.
