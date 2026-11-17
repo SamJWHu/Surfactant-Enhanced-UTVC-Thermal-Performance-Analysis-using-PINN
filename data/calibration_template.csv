@@ -1,0 +1,12 @@
+case,source,rho,mu,cp,k_liq,D,rho_v,mu_v,h_fg,sigma,contact_angle_deg,pore_radius,permeability,vapor_permeability,interface_h_vol,k_xy,k_z,rho_cp
+water,,,,,,,,,,,,,,,,,,
+PEG600_0.30,,,,,,,,,,,,,,,,,,
+PEG600_0.40,,,,,,,,,,,,,,,,,,
+PEG1000_0.20,,,,,,,,,,,,,,,,,,
+PEG1000_0.30,,,,,,,,,,,,,,,,,,
+PPG600_0.20,,,,,,,,,,,,,,,,,,
+PPG600_0.30,,,,,,,,,,,,,,,,,,
+PPG1000_0.10,,,,,,,,,,,,,,,,,,
+PPG1000_0.20,,,,,,,,,,,,,,,,,,
+APG_C12C13_0.10,,,,,,,,,,,,,,,,,,
+APG_C12C13_0.15,,,,,,,,,,,,,,,,,,

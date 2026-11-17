@@ -1,0 +1,17 @@
+{
+  "pressure_kPa_absolute": 19.946,
+  "Tsat_C": 59.99850236318224,
+  "superheat_K": 12.0,
+  "subcool_K": 1.0,
+  "lambda_pinn": 0.014202512800693512,
+  "lambda_exact": 0.014538628320837639,
+  "front_relative_error_pct": 2.3118791726891184,
+  "vapor_profile_RMSE_K": 0.00035246256124987123,
+  "liquid_profile_RMSE_K": 0.005237524530963146,
+  "dimensionless_loss": 0.0004996380303055048,
+  "train_s_including_trace": 2.008852526996634,
+  "seed": 42,
+  "Adam_steps": 25,
+  "LBFGS_iterations": 10,
+  "warm_start": "film.weights.h5"
+}

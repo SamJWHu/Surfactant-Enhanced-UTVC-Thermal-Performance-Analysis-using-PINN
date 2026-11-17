@@ -1,0 +1,17 @@
+{
+  "pressure_kPa_absolute": 19.946,
+  "Tsat_C": 59.99850236318224,
+  "superheat_K": 10.0,
+  "subcool_K": 1.0,
+  "lambda_pinn": 0.012176173739135265,
+  "lambda_exact": 0.012197706690941383,
+  "front_relative_error_pct": 0.1765327889226028,
+  "vapor_profile_RMSE_K": 0.0009535441720086325,
+  "liquid_profile_RMSE_K": 0.0006858973976659055,
+  "dimensionless_loss": 7.964707037899643e-05,
+  "train_s_including_trace": 2.1799427990044933,
+  "seed": 42,
+  "Adam_steps": 220,
+  "LBFGS_iterations": 120,
+  "warm_start": null
+}
