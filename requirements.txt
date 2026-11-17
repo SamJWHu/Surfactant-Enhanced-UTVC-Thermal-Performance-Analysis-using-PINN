@@ -1,0 +1,4 @@
+tensorflow==2.20.0
+numpy>=1.26,<2.4
+scipy>=1.13,<1.18
+matplotlib>=3.8,<3.11
